@@ -29,7 +29,7 @@ const retrieve_students = async (pool,teachers) => {
 }
 
 const retrieve_notification = async (pool,teacher) => {
-    const [results] = await pool.query("SELECT student_email FROM teacher_student WHERE teacher_email=?",[teacher]);
+    const [results] = await pool.query("SELECT ts.student_email FROM teacher_student ts JOIN students s ON ts.student_email = s.email WHERE s.suspended = 0 AND ts.teacher_email=?",[teacher]);
     const formattedArray = [];
     for (const student of results) {
         formattedArray.push(student.student_email)
